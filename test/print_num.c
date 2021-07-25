@@ -10,7 +10,7 @@
 d output to strings)
  */
 
-int print_num(const char *format, ...)
+int _printf(const char *format, ...)
 {
         int j, sum = 0 ;
         va_list ap;
@@ -23,7 +23,6 @@ int print_num(const char *format, ...)
         {
                 if(*format != '%')
                 {
-			putchar(*format);
                         continue;
                 }
                 switch (*p++)
@@ -32,6 +31,10 @@ int print_num(const char *format, ...)
 			ival = va_arg(ap, int);
 			printf("%d", ival);
                         break;
+		case 'i':
+			ival = va_arg(ap, int);
+			printf("%i", ival);
+			break;
                 }
         }
         va_end(ap);
