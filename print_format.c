@@ -12,26 +12,28 @@
 
 int _printf(const char *format, ...)
 {
-	int j, i = 0, sum = 0;
-	va_list ap;
-	char *p, *sval;
-
-	va_start(ap, format);
-
-	for (j = 0; format[j] != '\0'; j++)
+va_list args;
+	int size = 0;
+	print_fx fx[] = {
+		{"c", print_c},
+		{"s", print_s},
+		{"i", print_i},
+		{"d", print_i},
+		{"u", print_i},
+		{"b", print_b},
+		{"o", print_o},
+		{"x", print_x},
+		{"X", print_X},
+		{"r", print_r},
+		{"R", print_R},
+		{NULL, NULL}
+	};
+	va_start(args, format);
+	if (format == NULL || (format[0] == '%' && format[1] == '\0'))
 	{
-		if (*format != '%')
-		{
-			continue;
-		}
-		switch (*p++)
-		{
-		case 's':
-			for (sval = va_arg(ap, char *); *sval; sval++, i++)
-				sum += i;
-			break;
-		}
+		return (-1);
 	}
-	va_end(ap);
-	return (sum);
+	size = aux_func(format, args, fx);
+	va_end(args);
+	return (size);
 }
